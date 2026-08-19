@@ -4,31 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>@yield('title', 'Dashboard — Amiri CMS')</title>
+    <title>@yield('title', 'Admin Panel') — Amiri CMS</title>
 
-    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 </head>
 <body>
 
-    <header class="admin-header">
-        <div class="container admin-nav">
-            <a href="{{ route('admin.dashboard') }}" class="brand">AMIRI CMS</a>
+    <div class="admin-body">
 
-            <nav>
-                <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">Dashboard</a>
-                <a href="{{ route('admin.profile') }}" class="{{ request()->routeIs('admin.profile') ? 'active' : '' }}">Profile</a>
-                <a href="{{ route('admin.settings') }}" class="{{ request()->routeIs('admin.settings') ? 'active' : '' }}">Settings</a>
-                <form method="POST" action="{{ route('admin.logout') }}" style="display: inline;">
-                    @csrf
-                    <button type="submit" style="background: none; border: 0; color: var(--text-muted); font-size: 12px; cursor: pointer; font-family: inherit;">Logout</button>
-                </form>
-            </nav>
+        @include('admin.partials.sidebar')
+
+        <div class="main-content">
+            @if (session('status'))
+                <div class="alert alert-success">{{ session('status') }}</div>
+            @endif
+
+            @yield('content')
         </div>
-    </header>
 
-    <main>
-        @yield('content')
-    </main>
+    </div>
 
+    <script src="{{ asset('js/portfolio.js') }}" defer></script>
 </body>
 </html>
